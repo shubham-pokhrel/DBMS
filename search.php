@@ -23,6 +23,7 @@
                 </b>
             </centre>
             <hr>
+            S.N. <input type="SN" name= "SN" size="20"><br /><br />
             Name <input type="Name" name= "Name" size="20"><br /><br />
             Contact number <input type="contact" name= "contact" size="10"><br /><br />
             Card number <input type="card" name="card" size="5"><br /><br />
@@ -36,15 +37,19 @@
     <?php
         if(isset($_POST['submit']))
         {
+            $sn = $_POST['SN'];
             $name = $_POST['Name'];
             $card = $_POST['card'];
             $contact = $_POST['contact'];
         
+            $sn = trim($sn);
             $name = trim($name);
             $card = trim($card);
             $contact = trim($contact);
+            
+            
 
-            if (empty($name) && empty($card) && empty($contact)) 
+            if (empty($name) && empty($card) && empty($contact) && empty($sn)) 
                 {
                     echo "<p>Please fill at least one of the fields.</p>";
                     // echo "Please fill at least one of the fields.";
@@ -90,6 +95,11 @@
                                         // echo "search with contact";
                                         $conditions[] = "CONTACT_NUMBER = '$contact'";
                                     }
+                                if (!empty($sn))
+                                    {
+                                        // echo "search with contact";
+                                        $conditions[] = "SN = '$sn'";
+                                    }
                                 if(!empty($card))
                                     {
                                         // echo "search with card";
@@ -112,6 +122,7 @@
                                 echo "<table>
                                     <thead>
                                       <tr>
+                                        <th>S.N.</th>
                                         <th>Name</th>
                                         <th>Card</th>
                                         <th>Contact</th>
@@ -121,6 +132,7 @@
                                 
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr>
+                                            <td>".$row['SN']."</td>
                                             <td>".$row['NAME']."</td>
                                             <td>".$row['ID_CARD_NO']."</td>
                                             <td>".$row['CONTACT_NUMBER']."</td>
